@@ -25,7 +25,7 @@ jobs:
         run: npm ci
 
       - name: Build Docker image
-        run: docker build C:\Users\Kento Puleo\workspace\ToDO-App-Backend\Dockerfile
+        run: docker build ./ToDO-App-Backend/Dockerfile
 
       - name: Install Docker Compose
         run: |
