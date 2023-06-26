@@ -1,0 +1,39 @@
+version: "3.8"
+services:
+  test:
+    build: .
+    container_name: testback
+    command: npm run start:dev
+    volumes:
+      - ./src:/user
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: http://localhost:3306
+  db:
+    container_name: testrepository
+    image: mysql:latest
+    environment:
+      MYSQL_USER: 'admin'
+      MYSQL_ROOT_PASSWORD: 'admin'
+      MYSQL_DATABASE: 'mydb'
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./db:/var/lib/mysql
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: pma
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    links:
+      - db
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+
